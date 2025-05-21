@@ -148,6 +148,23 @@
             line-height: 1.6;
         }
 
+        @keyframes gradient-text {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .logo {
+            background-size: 200% auto;
+            animation: gradient-text 3s linear infinite;
+        }
+
         .now-playing {
             display: flex;
             align-items: center;
@@ -635,6 +652,13 @@
             color: rgba(176, 176, 204, 0.4);
         }
 
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            transition: opacity 0.3s ease;
+        }
+
         .location-name {
             display: flex;
             align-items: center;
@@ -771,6 +795,7 @@
                 <li><a href="#info">Info</a></li>
                 <li><a href="#social">Social</a></li>
                 <li><a href="#friends">Friends</a></li>
+                <li><a href="#about">About</a></li>
             </ul>
         </nav>
     </header>
@@ -798,9 +823,6 @@
                 </li>
             </ul>
 
-            <a href="https://www.last.fm/user/The_Cat_Art" target="_blank" style="display: inline-block; margin-top: 1rem; color: var(--accent-blue); text-decoration: none; font-size: 0.9rem;">
-                <i class="fas fa-external-link-alt"></i> View Last.fm Profile
-            </a>
         </div>
 
         <div class="card">
@@ -1053,6 +1075,18 @@
                     <i class="fab fa-lastfm" style="color: #d51007;"></i>
                     <span>Last.fm</span>
                 </a>
+                <a href="https://tidal.com/user/thecatart" target="_blank" class="social-link">
+                    <i class="fab fa-tidal" style="color: #00FFFF;"></i>
+                    <span>Tidal</span>
+                </a>
+                <a href="https://pinterest.com/thecatart" target="_blank" class="social-link">
+                    <i class="fab fa-pinterest" style="color: #E60023;"></i>
+                    <span>Pinterest</span>
+                </a>
+                <a href="https://bsky.app/profile/thecatart" target="_blank" class="social-link">
+                    <i class="fas fa-cloud" style="color: #0085FF;"></i>
+                    <span>Bluesky</span>
+                </a>
             </div>
         </div>
 
@@ -1071,6 +1105,35 @@
                     <span>Another Friend</span>
                 </a>
                 <!-- Add more friends as needed -->
+            </div>
+        </div>
+
+        <div class="card" id="about">
+            <h2><i class="fas fa-user"></i> About Me</h2>
+            <p>A little bit about who I am and what I do.</p>
+
+            <div style="margin-top: 1.5rem;">
+                <p style="margin-bottom: 1rem; line-height: 1.6;">
+                    Hi there! I'm The Cat Art, a developer and tech enthusiast based in Klagenfurt, Austria.
+                    I'm passionate about server management, coding, and creating digital experiences.
+                </p>
+
+                <p style="margin-bottom: 1rem; line-height: 1.6;">
+                    When I'm not managing servers or writing code, you can find me exploring new technologies,
+                    listening to music, or enjoying the beautiful surroundings of Klagenfurt.
+                </p>
+
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Skills & Interests</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="background: rgba(40, 40, 60, 0.5); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;">Server Administration</span>
+                        <span style="background: rgba(40, 40, 60, 0.5); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;">Web Development</span>
+                        <span style="background: rgba(40, 40, 60, 0.5); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;">Networking</span>
+                        <span style="background: rgba(40, 40, 60, 0.5); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;">Cloud Computing</span>
+                        <span style="background: rgba(40, 40, 60, 0.5); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;">Music</span>
+                        <span style="background: rgba(40, 40, 60, 0.5); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;">Photography</span>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -1284,52 +1347,62 @@
         let currentYear = today.getFullYear();
 
         function updateCalendar() {
-            // Clear previous days
-            calendarDays.innerHTML = '';
+            // Fade out
+            calendarDays.style.opacity = 0;
 
-            // Update month and year display
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            calendarMonth.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            setTimeout(() => {
+                // Clear previous days
+                calendarDays.innerHTML = '';
 
-            // Get first day of month and total days
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                // Update month and year display
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                calendarMonth.textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-            // Previous month's days
-            const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+                // Get first day of month and total days
+                const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-            // Add previous month's days
-            for (let i = firstDay - 1; i >= 0; i--) {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'calendar-day other-month';
-                dayEl.textContent = prevMonthDays - i;
-                calendarDays.appendChild(dayEl);
-            }
+                // Previous month's days
+                const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
 
-            // Add current month's days
-            for (let i = 1; i <= daysInMonth; i++) {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'calendar-day';
-
-                // Check if this is today's date
-                if (currentMonth === today.getMonth() && currentYear === today.getFullYear() && i === today.getDate()) {
-                    dayEl.classList.add('today');
+                // Add previous month's days
+                for (let i = firstDay - 1; i >= 0; i--) {
+                    const dayEl = document.createElement('div');
+                    dayEl.className = 'calendar-day other-month';
+                    dayEl.textContent = prevMonthDays - i;
+                    calendarDays.appendChild(dayEl);
                 }
 
-                dayEl.textContent = i;
-                calendarDays.appendChild(dayEl);
-            }
+                // Add current month's days
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayEl = document.createElement('div');
+                    dayEl.className = 'calendar-day';
 
-            // Add next month's days to fill the grid (6 rows * 7 days = 42 cells)
-            const totalCells = 42;
-            const remainingCells = totalCells - (firstDay + daysInMonth);
+                    // Check if this is today's date
+                    if (currentMonth === today.getMonth() && currentYear === today.getFullYear() && i === today.getDate()) {
+                        dayEl.classList.add('today');
+                    }
 
-            for (let i = 1; i <= remainingCells; i++) {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'calendar-day other-month';
-                dayEl.textContent = i;
-                calendarDays.appendChild(dayEl);
-            }
+                    dayEl.textContent = i;
+                    calendarDays.appendChild(dayEl);
+                }
+
+                // Add next month's days to fill the grid (6 rows * 7 days = 42 cells)
+                const totalCells = 42;
+                const remainingCells = totalCells - (firstDay + daysInMonth);
+
+                for (let i = 1; i <= remainingCells; i++) {
+                    const dayEl = document.createElement('div');
+                    dayEl.className = 'calendar-day other-month';
+                    dayEl.textContent = i;
+                    calendarDays.appendChild(dayEl);
+                }
+
+                // Fade in
+                setTimeout(() => {
+                    calendarDays.style.opacity = 1;
+                }, 50);
+            }, 300);
         }
 
         // Initial calendar generation
