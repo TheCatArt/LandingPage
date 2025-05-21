@@ -627,6 +627,115 @@
             gap: 5px;
         }
 
+
+        /* Social Media Button Enhancements - Add to your CSS */
+        .social-link {
+            transition: all 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Instagram hover effect */
+        .social-link.instagram:hover {
+            background: linear-gradient(45deg, #FCAF45, #E1306C, #C13584, #833AB4, #5851DB, #405DE6);
+            border-color: transparent;
+        }
+
+        /* TikTok hover effect */
+        .social-link.tiktok:hover {
+            background: linear-gradient(45deg, #25F4EE, #000000, #FE2C55);
+            border-color: transparent;
+        }
+
+        /* Discord hover effect */
+        .social-link.discord:hover {
+            background-color: #7289DA;
+            border-color: #7289DA;
+        }
+
+        /* GitHub hover effect */
+        .social-link.github:hover {
+            background-color: #333333;
+            border-color: #333333;
+        }
+
+        /* Reddit hover effect */
+        .social-link.reddit:hover {
+            background-color: #FF4500;
+            border-color: #FF4500;
+        }
+
+        /* Spotify hover effect */
+        .social-link.spotify:hover {
+            background-color: #1DB954;
+            border-color: #1DB954;
+        }
+
+        /* Twitter hover effect */
+        .social-link.twitter:hover {
+            background-color: #1DA1F2;
+            border-color: #1DA1F2;
+        }
+
+        /* Steam hover effect */
+        .social-link.steam:hover {
+            background-color: #171a21;
+            border-color: #171a21;
+        }
+
+        /* YouTube hover effect */
+        .social-link.youtube:hover {
+            background-color: #FF0000;
+            border-color: #FF0000;
+        }
+
+        /* Twitch hover effect */
+        .social-link.twitch:hover {
+            background-color: #9146FF;
+            border-color: #9146FF;
+        }
+
+        /* Last.fm hover effect */
+        .social-link.lastfm:hover {
+            background-color: #d51007;
+            border-color: #d51007;
+        }
+
+        /* Tidal hover effect */
+        .social-link.tidal:hover {
+            background-color: #000000;
+            border-color: #00FFFF;
+        }
+
+        /* Pinterest hover effect */
+        .social-link.pinterest:hover {
+            background-color: #E60023;
+            border-color: #E60023;
+        }
+
+        /* Bluesky hover effect */
+        .social-link.bluesky:hover {
+            background-color: #0085FF;
+            border-color: #0085FF;
+        }
+
+        /* Tidal Logo */
+        .fa-tidal {
+            position: relative;
+            width: 1em;
+            height: 1em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fa-tidal:before {
+            content: "";
+            position: absolute;
+            width: 0.8em;
+            height: 0.8em;
+            background: currentColor;
+            clip-path: polygon(0 100%, 33% 0, 66% 100%, 100% 0);
+        }
+
         .calendar-day {
             text-align: center;
             padding: 0.5rem 0;
@@ -854,7 +963,7 @@
             </div>
 
             <div style="margin-top: 2rem;">
-                <div class="clock" id="clock">14:30:45</div>
+                <div class="clock" id="clock"><span class="digit">--</span></div>
                 <div class="date" id="date">Wednesday, May 21, 2025</div>
             </div>
 
@@ -1031,59 +1140,59 @@
             <p>Connect with me on various social platforms.</p>
 
             <div class="social-links">
-                <a href="https://www.instagram.com/the_cat_art1/" target="_blank" class="social-link">
+                <a href="https://www.instagram.com/the_cat_art1/" target="_blank" class="social-link instagram">
                     <i class="fab fa-instagram" style="color: #E1306C;"></i>
                     <span>Instagram</span>
                 </a>
-                <a href="https://www.tiktok.com/@the_cat_art1" target="_blank" class="social-link">
+                <a href="https://www.tiktok.com/@the_cat_art1" target="_blank" class="social-link tiktok">
                     <i class="fab fa-tiktok" style="color: #69C9D0;"></i>
                     <span>TikTok</span>
                 </a>
-                <a href="https://discordapp.com/users/766654704419078164" target="_blank" class="social-link">
+                <a href="https://discordapp.com/users/766654704419078164" target="_blank" class="social-link discord">
                     <i class="fab fa-discord" style="color: #7289DA;"></i>
                     <span>Discord</span>
                 </a>
-                <a href="https://github.com/TheCatArt" target="_blank" class="social-link">
+                <a href="https://github.com/TheCatArt" target="_blank" class="social-link github">
                     <i class="fab fa-github" style="color: #f5f5f5;"></i>
                     <span>GitHub</span>
                 </a>
-                <a href="https://www.reddit.com/user/The_Cat_Art/" target="_blank" class="social-link">
+                <a href="https://www.reddit.com/user/The_Cat_Art/" target="_blank" class="social-link reddit">
                     <i class="fab fa-reddit" style="color: #FF4500;"></i>
                     <span>Reddit</span>
                 </a>
-                <a href="https://open.spotify.com/user/t5iunl8ilymqbf1yu2r72dz77" target="_blank" class="social-link">
+                <a href="https://open.spotify.com/user/t5iunl8ilymqbf1yu2r72dz77" target="_blank" class="social-link spotify">
                     <i class="fab fa-spotify" style="color: #1DB954;"></i>
                     <span>Spotify</span>
                 </a>
-                <a href="https://twitter.com/TheCatArt1" target="_blank" class="social-link">
+                <a href="https://twitter.com/TheCatArt1" target="_blank" class="social-link twitter">
                     <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
                     <span>Twitter</span>
                 </a>
-                <a href="https://steamcommunity.com/id/the_cat_art" target="_blank" class="social-link">
+                <a href="https://steamcommunity.com/id/the_cat_art" target="_blank" class="social-link steam">
                     <i class="fab fa-steam" style="color: #171a21;"></i>
                     <span>Steam</span>
                 </a>
-                <a href="https://youtube.com/@the_cat_art" target="_blank" class="social-link">
+                <a href="https://youtube.com/@the_cat_art" target="_blank" class="social-link youtube">
                     <i class="fab fa-youtube" style="color: #FF0000;"></i>
                     <span>YouTube</span>
                 </a>
-                <a href="https://www.twitch.tv/the_cat_art" target="_blank" class="social-link">
+                <a href="https://www.twitch.tv/the_cat_art" target="_blank" class="social-link twitch">
                     <i class="fab fa-twitch" style="color: #9146FF;"></i>
                     <span>Twitch</span>
                 </a>
-                <a href="https://last.fm/user/The_Cat_Art" target="_blank" class="social-link">
+                <a href="https://last.fm/user/The_Cat_Art" target="_blank" class="social-link lastfm">
                     <i class="fab fa-lastfm" style="color: #d51007;"></i>
                     <span>Last.fm</span>
                 </a>
-                <a href="https://tidal.com/user/195981518" target="_blank" class="social-link">
-                    <i class="fab fa-tidal" style="color: #00FFFF;"></i>
+                <a href="https://tidal.com/user/195981518" target="_blank" class="social-link tidal">
+                    <i class="fa-tidal" style="color: #00FFFF;"></i>
                     <span>Tidal</span>
                 </a>
-                <a href="https://at.pinterest.com/the_cat_art/" target="_blank" class="social-link">
+                <a href="https://at.pinterest.com/the_cat_art/" target="_blank" class="social-link pinterest">
                     <i class="fab fa-pinterest" style="color: #E60023;"></i>
                     <span>Pinterest</span>
                 </a>
-                <a href="https://bsky.app/profile/thecatart1.bsky.social" target="_blank" class="social-link">
+                <a href="https://bsky.app/profile/thecatart1.bsky.social" target="_blank" class="social-link bluesky">
                     <i class="fas fa-cloud" style="color: #0085FF;"></i>
                     <span>Bluesky</span>
                 </a>
@@ -1112,11 +1221,17 @@
             <h2><i class="fas fa-user"></i> About Me</h2>
             <p>A little bit about who I am and what I do.</p>
 
+            <!-- Updated About Me section with pride badge -->
             <div style="margin-top: 1.5rem;">
-                <p style="margin-bottom: 1rem; line-height: 1.6;">
-                    Hi there! I'm The Cat Art, a developer and tech enthusiast based in Klagenfurt, Austria.
-                    I'm passionate about server management, coding, and creating digital experiences.
-                </p>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                    <p style="flex: 1; margin: 0; line-height: 1.6;">
+                        Hi there! I'm The Cat Art, a developer and tech enthusiast based in Klagenfurt, Austria.
+                        I'm passionate about server management, coding, and creating digital experiences.
+                    </p>
+                    <div class="pride-badge" style="flex-shrink: 0; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); animation: subtle-pulse 3s infinite alternate; transform: rotate(0deg) scale(1.2);">
+                        <img src="https://badge.les.bi/88x31/gay/rainbow/diagonal.png" alt="Pride Badge" width="88" height="31">
+                    </div>
+                </div>
 
                 <p style="margin-bottom: 1rem; line-height: 1.6;">
                     When I'm not managing servers or writing code, you can find me exploring new technologies,
@@ -1135,6 +1250,19 @@
                     </div>
                 </div>
             </div>
+
+            <style>
+                @keyframes subtle-pulse {
+                    0% {
+                        transform: rotate(0deg) scale(1.2);
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                    }
+                    100% {
+                        transform: rotate(0deg) scale(1.25);
+                        box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+                    }
+                }
+            </style>
         </div>
     </main>
 
@@ -1193,19 +1321,19 @@
                 nowPlayingPlaceholder.style.display = 'none';
 
                 nowPlayingContainer.innerHTML = `
-                    <img src="${currentTrack.image[2]['#text'] || 'https://via.placeholder.com/60'}" alt="Album art" class="album-art">
-                    <div class="track-info">
-                        <div class="track-title">${currentTrack.name}</div>
-                        <div class="track-artist">${currentTrack.artist['#text']}</div>
-                    </div>
-                    <div class="music-visualizer">
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                    </div>
-                `;
+                <img src="${currentTrack.image[2]['#text'] || 'https://via.placeholder.com/60'}" alt="Album art" class="album-art">
+                <div class="track-info">
+                    <div class="track-title">${currentTrack.name}</div>
+                    <div class="track-artist">${currentTrack.artist['#text']}</div>
+                </div>
+                <div class="music-visualizer">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            `;
             } else {
                 nowPlayingPlaceholder.style.display = 'block';
                 const visualizer = document.querySelector('.music-visualizer');
@@ -1224,6 +1352,7 @@
                 const track = tracks[i];
                 const timeAgo = track.date ? new Date(track.date.uts * 1000) : null;
                 let timeAgoText = '';
+                let exactDateTime = '';
 
                 if (timeAgo) {
                     const now = new Date();
@@ -1240,38 +1369,52 @@
                             timeAgoText = `${diffDays}d ago`;
                         }
                     }
+
+                    // Format exact date and time
+                    const dateOptions = {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    };
+                    exactDateTime = timeAgo.toLocaleDateString('en-US', dateOptions);
                 }
 
                 recentTracks.innerHTML += `
-                    <li class="history-item">
-                        <img src="${track.image[1]['#text'] || 'https://via.placeholder.com/40'}" alt="Album art" class="history-album">
-                        <div class="history-info">
-                            <div class="history-title">${track.name}</div>
-                            <div class="history-artist">${track.artist['#text']}</div>
-                        </div>
-                        <div class="history-time">${timeAgoText}</div>
-                    </li>
-                `;
+                <li class="history-item">
+                    <img src="${track.image[1]['#text'] || 'https://via.placeholder.com/40'}" alt="Album art" class="history-album">
+                    <div class="history-info">
+                        <div class="history-title">${track.name}</div>
+                        <div class="history-artist">${track.artist['#text']}</div>
+                    </div>
+                    <div class="history-time">
+                        <div>${timeAgoText}</div>
+                        <div style="font-size: 0.7rem; margin-top: 0.2rem;">${exactDateTime}</div>
+                    </div>
+                </li>
+            `;
             }
         } catch (error) {
             console.error('Error fetching Last.fm data:', error);
             nowPlayingContainer.innerHTML = `
-                <div id="now-playing-placeholder">
-                    <p>Could not load music data...</p>
-                </div>
-            `;
+            <div id="now-playing-placeholder">
+                <p>Could not load music data...</p>
+            </div>
+        `;
             recentTracks.innerHTML = `
-                <li class="history-item">
-                    <div style="width: 40px; height: 40px; border-radius: 6px; background: rgba(40, 40, 60, 0.5); display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-exclamation-circle" style="color: var(--accent-purple);"></i>
-                    </div>
-                    <div class="history-info">
-                        <div class="history-title">Failed to load recent tracks</div>
-                        <div class="history-artist">Check your Last.fm connection</div>
-                    </div>
-                </li>
-            `;
+            <li class="history-item">
+                <div style="width: 40px; height: 40px; border-radius: 6px; background: rgba(40, 40, 60, 0.5); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-exclamation-circle" style="color: var(--accent-purple);"></i>
+                </div>
+                <div class="history-info">
+                    <div class="history-title">Failed to load recent tracks</div>
+                    <div class="history-artist">Check your Last.fm connection</div>
+                </div>
+            </li>
+        `;
         }
+
     }
 
     // Fetch initial LastFM data and update every 30 seconds
