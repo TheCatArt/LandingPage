@@ -1,0 +1,12 @@
+[Unit]
+Description=Server Stats API
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /opt/server-stats/index.js
+Restart=always
+User=nobody
+Environment=PORT=3621
+
+[Install]
+WantedBy=multi-user.target
