@@ -1,0 +1,12 @@
+sudo mkdir -p /opt/server-stats
+sudo chown $USER:$USER /opt/server-stats
+cd /opt/server-stats
+npm init -y
+npm install express systeminformation
+nano index.js
+node index.js //-> test
+sudo nano /etc/systemd/system/server-stats.service
+sudo systemctl daemon-reexec
+sudo systemctl enable server-stats
+sudo systemctl start server-stats
+sudo systemctl status server-stats
