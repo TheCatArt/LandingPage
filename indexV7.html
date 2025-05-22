@@ -1200,10 +1200,7 @@
 
             <div class="calendar">
                 <div class="calendar-header">
-                    <div class="calendar-month" id="calendar-month">
-                        <span class="month-text">May 2025</span>
-                    </div>
-
+                    <div class="calendar-month" id="calendar-month">May 2025</div>
                     <div class="calendar-nav">
                         <button class="calendar-nav-btn" id="prev-month"><i class="fas fa-chevron-left"></i></button>
                         <button class="calendar-nav-btn" id="next-month"><i class="fas fa-chevron-right"></i></button>
@@ -1794,33 +1791,26 @@
         let currentMonth = today.getMonth();
         let currentYear = today.getFullYear();
 
-        function updateCalendar(direction = 'next') {
+        function updateCalendar() {
+            // Fade out
             calendarDays.style.opacity = 0;
 
             setTimeout(() => {
+                // Clear previous days
                 calendarDays.innerHTML = '';
 
-                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                    'July', 'August', 'September', 'October', 'November', 'December'];
-                const newMonthText = `${monthNames[currentMonth]} ${currentYear}`;
+                // Update month and year display
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                calendarMonth.textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-                const oldText = calendarMonth.querySelector('.month-text');
-
-                const exiting = oldText.cloneNode(true);
-                exiting.classList.add(direction === 'prev' ? 'month-exit-prev' : 'month-exit-next');
-                calendarMonth.appendChild(exiting);
-
-                const entering = document.createElement('span');
-                entering.className = 'month-text ' + (direction === 'prev' ? 'month-enter-prev' : 'month-enter-next');
-                entering.textContent = newMonthText;
-                calendarMonth.appendChild(entering);
-
-                exiting.addEventListener('animationend', () => exiting.remove(), { once: true });
-
+                // Get first day of month and total days
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
                 const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                // Previous month's days
                 const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
 
+                // Add previous month's days
                 for (let i = firstDay - 1; i >= 0; i--) {
                     const dayEl = document.createElement('div');
                     dayEl.className = 'calendar-day other-month';
@@ -1828,18 +1818,24 @@
                     calendarDays.appendChild(dayEl);
                 }
 
+                // Add current month's days
                 for (let i = 1; i <= daysInMonth; i++) {
                     const dayEl = document.createElement('div');
                     dayEl.className = 'calendar-day';
+
+                    // Check if this is today's date
                     if (currentMonth === today.getMonth() && currentYear === today.getFullYear() && i === today.getDate()) {
                         dayEl.classList.add('today');
                     }
+
                     dayEl.textContent = i;
                     calendarDays.appendChild(dayEl);
                 }
 
+                // Add next month's days to fill the grid (6 rows * 7 days = 42 cells)
                 const totalCells = 42;
                 const remainingCells = totalCells - (firstDay + daysInMonth);
+
                 for (let i = 1; i <= remainingCells; i++) {
                     const dayEl = document.createElement('div');
                     dayEl.className = 'calendar-day other-month';
@@ -1847,12 +1843,12 @@
                     calendarDays.appendChild(dayEl);
                 }
 
+                // Fade in
                 setTimeout(() => {
                     calendarDays.style.opacity = 1;
                 }, 50);
             }, 300);
         }
-
 
         // Initial calendar generation
         updateCalendar();
@@ -1864,7 +1860,7 @@
                 currentMonth = 11;
                 currentYear--;
             }
-            updateCalendar('prev');
+            updateCalendar();
         });
 
         document.getElementById('next-month').addEventListener('click', () => {
@@ -1873,9 +1869,8 @@
                 currentMonth = 0;
                 currentYear++;
             }
-            updateCalendar('next');
+            updateCalendar();
         });
-
     }
 
     // Generate calendar on page load
