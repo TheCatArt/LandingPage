@@ -1878,16 +1878,44 @@
 
     // Server monitoring functionality
     // Note: This is placeholder functionality since you mentioned you don't have direct access to server stats
-    function simulateServerStats() {
-        // This is a placeholder that would normally be replaced by actual monitoring integration
-        const statValues = document.querySelectorAll('.stat-value');
+    // Replace the simulateServerStats function with this:
+    // Updated server stats function with better error handling
+    async function fetchServerStats() {
+        try {
+            const response = await fetch('http://45.147.7.220:3621/stats', {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                }
+            });
 
-        statValues[0].textContent = '-- %';  // CPU
-        statValues[1].textContent = '-- %';  // RAM
-        statValues[2].textContent = '-- %';  // Storage
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Server stats received:', data); // Debug log
+
+            const statValues = document.querySelectorAll('.stat-value');
+
+            statValues[0].textContent = `${parseFloat(data.cpu).toFixed(1)}%`;
+            statValues[1].textContent = `${Math.round(parseFloat(data.ram))}%`;
+            statValues[2].textContent = `${Math.round(parseFloat(data.storage))}%`;
+
+
+        } catch (error) {
+            console.error('Error fetching server stats:', error);
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues[0].textContent = 'N/A';
+            statValues[1].textContent = 'N/A';
+            statValues[2].textContent = 'N/A';
+        }
     }
 
-    simulateServerStats();
+    // Call initially and then every 30 seconds
+    fetchServerStats();
+    setInterval(fetchServerStats, 5000);
 
     // For real server monitoring, you could set up a small Node.js or Python service
     // on your server that collects system stats and exposes them via an API
