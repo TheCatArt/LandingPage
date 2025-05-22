@@ -1429,11 +1429,28 @@
                     </div>
                 </div>
 
-                <p style="margin-bottom: 1rem; line-height: 1.6;">
-                    When I'm not managing servers or writing code, you can find me exploring new technologies,
-                    listening to music, or enjoying the beautiful surroundings of Klagenfurt.
-                </p>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <p style="flex: 1; margin: 0; line-height: 1.6;">
+                        When I'm not managing servers or writing code, you can find me exploring new technologies,
+                        listening to music, or enjoying the beautiful surroundings of Klagenfurt.
+                    </p>
+                    <div class="orange-heart" style="flex-shrink: 0; font-size: 2.5rem; color: #ff8c00; animation: heart-pulse 2.5s infinite alternate; text-shadow: 0 0 15px rgba(255, 140, 0, 0.6);">
+                        🧡
+                    </div>
+                </div>
 
+                <style>
+                    @keyframes heart-pulse {
+                        0% {
+                            transform: scale(1);
+                            text-shadow: 0 0 15px rgba(255, 140, 0, 0.6);
+                        }
+                        100% {
+                            transform: scale(1.1);
+                            text-shadow: 0 0 25px rgba(255, 140, 0, 0.8), 0 0 30px rgba(255, 140, 0, 0.4);
+                        }
+                    }
+                </style>
                 <div style="margin-top: 2rem;">
                     <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Skills & Interests</h3>
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
