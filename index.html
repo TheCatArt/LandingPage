@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat's Dashboard</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -1314,6 +1314,7 @@
                 <li><a href="#social">Social</a></li>
                 <li><a href="#friends">Friends</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#games">Games</a></li>
             </ul>
         </nav>
     </header>
@@ -1702,6 +1703,62 @@
                 }
             </style>
         </div>
+
+
+        <div class="card" id="games">
+            <h2><i class="fas fa-gamepad"></i> Gaming</h2>
+            <p>Check out my gaming profiles and what I'm currently playing.</p>
+
+            <div style="margin-top: 1.5rem;">
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fab fa-steam" style="color: #171a21;"></i>
+                        Currently Playing
+                    </h3>
+                    <div id="steam-currently-playing" style="background: rgba(40, 40, 60, 0.5); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.05);">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-spinner fa-spin" style="color: var(--accent-blue);"></i>
+                            <span>Loading Steam status...</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fab fa-discord" style="color: #7289DA;"></i>
+                        Discord Profile
+                    </h3>
+                    <div style="background: rgba(40, 40, 60, 0.5); border-radius: 12px; padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.05);">
+                        <iframe
+                                src="https://widgets.vendicated.dev/user?id=766654704419078164&theme=dark&banner=true&full-banner=true&rounded-corners=true&discord-icon=true&badges=true&guess-nitro=true&"
+                                width="100%"
+                                height="280"
+                                style="border: none; border-radius: 8px; background: transparent;"
+                                loading="lazy">
+                        </iframe>
+
+
+                        <div>
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fab fa-steam" style="color: #171a21;"></i>
+                                Steam Profile
+                            </h3>
+                            <div style="background: rgba(40, 40, 60, 0.5); border-radius: 12px; padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
+                                <a href="https://www.steamidfinder.com/lookup/76561199187129606/"
+                                   target="_blank"
+                                   style="display: inline-block; transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px; overflow: hidden;">
+                                    <img src="https://www.steamidfinder.com/signature/76561199187129606.png"
+                                         alt="The_Cat_Art Steam Signature - SteamId for The_Cat_Art, real name Cat"
+                                         style="max-width: 100%; height: auto; border-radius: 8px; transition: transform 0.3s ease;"
+                                         onmouseover="this.style.transform='scale(1.02)'"
+                                         onmouseout="this.style.transform='scale(1)'"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
     </main>
 
     <footer class="footer">
@@ -2240,7 +2297,7 @@
     const subservers = [
         { name: 'Node', ip: '', status: 'online'},
         { name: 'Server', ip: '45.147.7.220:20000', status: 'offline'},
-        // Add more subservers here as needed
+
     ];
 
     function updateSubserverStatus() {
@@ -2264,6 +2321,120 @@
     }
 
     updateSubserverStatus();
+
+    const steamId = '76561199187129606';
+
+    async function fetchSteamStatus() {
+        const steamContainer = document.getElementById('steam-currently-playing');
+
+        try {
+
+            const response = await fetch('http://45.147.7.220:3622/steam-status', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Backend request failed: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            if (data.currentGame && data.currentGame.name) {
+
+                const vrGames = ['Half-Life: Alyx', 'Beat Saber', 'VRChat', 'Pavlov VR', 'Boneworks', 'The Lab', 'Superhot VR', 'Job Simulator', 'Blade & Sorcery', 'Arizona Sunshine', 'Onward', 'Rec Room', 'Elite Dangerous', 'DCS World', 'No Man\'s Sky', 'Skyrim VR', 'Fallout 4 VR'];
+                const isVRGame = vrGames.some(vrGame => data.currentGame.name.toLowerCase().includes(vrGame.toLowerCase()));
+
+
+                const gameImageUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${data.currentGame.id}/header.jpg`;
+
+                steamContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 60px; height: 60px; background: rgba(23, 26, 33, 0.8); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                        <img src="${gameImageUrl}"
+                             alt="${data.currentGame.name}"
+                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; background: rgba(23, 26, 33, 0.8);">
+                            <i class="fab fa-steam" style="color: #66c0f4; font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                            ${data.currentGame.name}
+                            ${isVRGame ? '<i class="fas fa-vr-cardboard" style="color: #ff6b6b; font-size: 1rem;" title="VR Game"></i>' : ''}
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary);">
+                            Currently playing on Steam${isVRGame ? ' (VR)' : ''}
+                        </div>
+                    </div>
+                    <div style="width: 12px; height: 12px; background: #4caf50; border-radius: 50%; box-shadow: 0 0 8px #4caf50; animation: pulse 2s infinite;"></div>
+                </div>
+            `;
+            } else {
+
+                let statusText = data.status || 'Online';
+                let statusColor = '#57cbde';
+
+                switch(data.personaState) {
+                    case 0: statusText = 'Offline'; statusColor = '#898989'; break;
+                    case 1: statusText = 'Online'; statusColor = '#2196f3'; break;
+                    case 2: statusText = 'Busy'; statusColor = '#d32f2f'; break;
+                    case 3: statusText = 'Away'; statusColor = '#ff9800'; break;
+                    case 4: statusText = 'Snooze'; statusColor = '#ff9800'; break;
+                    case 5: statusText = 'Looking to trade'; statusColor = '#2196f3'; break;
+                    case 6: statusText = 'Looking to play'; statusColor = '#8bc34a'; break;
+                }
+
+                steamContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 60px; height: 60px; background: rgba(23, 26, 33, 0.8); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fab fa-steam" style="color: ${statusColor}; font-size: 1.5rem;"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">
+                            Not playing anything
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary);">
+                            Status: ${statusText}
+                        </div>
+                        ${data.lastLogOff ? `<div style="font-size: 0.8rem; color: var(--text-secondary); opacity: 0.8;">Last seen: ${data.lastLogOff}</div>` : ''}
+                    </div>
+                    <div style="width: 12px; height: 12px; background: ${statusColor}; border-radius: 50%; box-shadow: 0 0 8px ${statusColor};"></div>
+                </div>
+            `;
+            }
+
+        } catch (error) {
+            console.error('Error fetching Steam data:', error);
+            steamContainer.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="width: 60px; height: 60px; background: rgba(40, 40, 60, 0.5); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-exclamation-circle" style="color: #ff6b6b; font-size: 1.2rem;"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 1rem; color: var(--text-secondary);">
+                        Steam status unavailable
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); opacity: 0.7;">
+                        Backend service error
+                    </div>
+                </div>
+            </div>
+        `;
+        }
+    }
+
+
+    fetchSteamStatus();
+    setInterval(fetchSteamStatus, 30000);
+
 </script>
 </body>
 </html>
