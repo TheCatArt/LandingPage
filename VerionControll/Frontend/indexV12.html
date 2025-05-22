@@ -1704,13 +1704,12 @@
             </style>
         </div>
 
-        <!-- Add this new card after the "about" card but before the closing </main> tag -->
+
         <div class="card" id="games">
             <h2><i class="fas fa-gamepad"></i> Gaming</h2>
             <p>Check out my gaming profiles and what I'm currently playing.</p>
 
             <div style="margin-top: 1.5rem;">
-                <!-- Currently Playing Section - At the top -->
                 <div style="margin-bottom: 2rem;">
                     <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fab fa-steam" style="color: #171a21;"></i>
@@ -1724,7 +1723,7 @@
                     </div>
                 </div>
 
-                <!-- Discord Profile Section -->
+
                 <div style="margin-bottom: 2rem;">
                     <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fab fa-discord" style="color: #7289DA;"></i>
@@ -1742,7 +1741,7 @@
                     </div>
                 </div>
 
-                <!-- Steam Profile Section -->
+
                 <div>
                     <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fab fa-steam" style="color: #171a21;"></i>
@@ -2301,7 +2300,7 @@
     const subservers = [
         { name: 'Node', ip: '', status: 'online'},
         { name: 'Server', ip: '45.147.7.220:20000', status: 'offline'},
-        // Add more subservers here as needed
+
     ];
 
     function updateSubserverStatus() {
@@ -2332,7 +2331,7 @@
         const steamContainer = document.getElementById('steam-currently-playing');
 
         try {
-            // Call your Steam API backend
+
             const response = await fetch('http://45.147.7.220:3622/steam-status', {
                 method: 'GET',
                 headers: {
@@ -2351,11 +2350,11 @@
             }
 
             if (data.currentGame && data.currentGame.name) {
-                // Check if it's a VR game
+
                 const vrGames = ['Half-Life: Alyx', 'Beat Saber', 'VRChat', 'Pavlov VR', 'Boneworks', 'The Lab', 'Superhot VR', 'Job Simulator', 'Blade & Sorcery', 'Arizona Sunshine', 'Onward', 'Rec Room', 'Elite Dangerous', 'DCS World', 'No Man\'s Sky', 'Skyrim VR', 'Fallout 4 VR'];
                 const isVRGame = vrGames.some(vrGame => data.currentGame.name.toLowerCase().includes(vrGame.toLowerCase()));
 
-                // Get game image
+
                 const gameImageUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${data.currentGame.id}/header.jpg`;
 
                 steamContainer.innerHTML = `
@@ -2382,7 +2381,7 @@
                 </div>
             `;
             } else {
-                // Player is online but not playing anything
+
                 let statusText = data.status || 'Online';
                 let statusColor = '#57cbde';
 
@@ -2435,9 +2434,9 @@
         }
     }
 
-    // Start fetching Steam status
+
     fetchSteamStatus();
-    setInterval(fetchSteamStatus, 30000); // Update every 30 seconds
+    setInterval(fetchSteamStatus, 30000);
 
 </script>
 </body>
