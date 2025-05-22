@@ -1111,6 +1111,197 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* Smoothere Weather icon animations */
+        .sun-animation {
+            animation: sun-rotate 12s linear infinite;
+        }
+
+
+        .snow-animation {
+            animation: snow-drift 4s ease-in-out infinite alternate;
+        }
+
+        .thunder-animation {
+            animation: thunder-flash 3s ease-in-out infinite;
+        }
+
+
+        .cloud-animation {
+            animation: cloud-drift 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes cloud-drift {
+            0% {
+                transform: translateY(-1px);
+                filter: drop-shadow(0 0 4px #B0C4DE);
+            }
+            100% {
+                transform: translateY(1px);
+                filter: drop-shadow(0 0 6px #B0C4DE);
+            }
+        }
+
+        .wind-arrow {
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: wind-pulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes sun-rotate {
+            from {
+                transform: rotate(0deg);
+                filter: brightness(1) drop-shadow(0 0 8px #FFD700);
+            }
+            to {
+                transform: rotate(360deg);
+                filter: brightness(1.1) drop-shadow(0 0 12px #FFD700);
+            }
+        }
+
+        @keyframes rain-bounce {
+            0% {
+                transform: translateY(0px);
+                filter: drop-shadow(0 0 4px #4682B4);
+            }
+            100% {
+                transform: translateY(-2px);
+                filter: drop-shadow(0 1px 6px #4682B4);
+            }
+        }
+
+        @keyframes snow-drift {
+            0% {
+                transform: translateX(-1px) rotate(0deg);
+                filter: drop-shadow(0 0 6px #B0E0E6);
+            }
+            100% {
+                transform: translateX(1px) rotate(5deg);
+                filter: drop-shadow(0 0 8px #B0E0E6);
+            }
+        }
+
+        @keyframes thunder-flash {
+            0%, 60%, 100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 8px #FFD700);
+            }
+            30% {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 15px #FFD700) brightness(1.3);
+            }
+        }
+
+        @keyframes fog-float {
+            0% {
+                transform: translateX(-0.5px);
+                opacity: 0.85;
+                filter: blur(0.3px);
+            }
+            100% {
+                transform: translateX(0.5px);
+                opacity: 1;
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes cloud-drift {
+            0% {
+                transform: translateX(-0.5px);
+                filter: drop-shadow(0 0 4px #B0C4DE);
+            }
+            100% {
+                transform: translateX(0.5px);
+                filter: drop-shadow(0 0 6px #B0C4DE);
+            }
+        }
+
+        @keyframes wind-pulse {
+            0% {
+                filter: drop-shadow(0 0 2px var(--accent-blue));
+            }
+            100% {
+                filter: drop-shadow(0 0 6px var(--accent-blue)) brightness(1.1);
+            }
+        }
+
+        .rain-animation {
+            animation: rain-smooth 3s ease-in-out infinite alternate;
+        }
+
+        .fog-animation {
+            animation: fog-wave 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .fog-animation::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: -20%;
+            width: 140%;
+            height: 6px;
+            background: linear-gradient(90deg, transparent, rgba(211, 211, 211, 0.6), transparent);
+            border-radius: 50%;
+            animation: fog-trail 3s ease-in-out infinite;
+        }
+
+        @keyframes rain-smooth {
+            0% {
+                transform: translateY(0px) scale(1);
+                filter: drop-shadow(0 0 4px #4682B4);
+            }
+            50% {
+                transform: translateY(-1px) scale(1.02);
+                filter: drop-shadow(0 2px 6px #4682B4);
+            }
+            100% {
+                transform: translateY(0px) scale(1);
+                filter: drop-shadow(0 0 4px #4682B4);
+            }
+        }
+
+        @keyframes fog-wave {
+            0% {
+                transform: translateX(0px);
+                opacity: 0.85;
+                filter: blur(0.5px);
+            }
+            25% {
+                transform: translateX(1px);
+                opacity: 0.9;
+                filter: blur(0.3px);
+            }
+            50% {
+                transform: translateX(0px);
+                opacity: 1;
+                filter: blur(0px);
+            }
+            75% {
+                transform: translateX(-1px);
+                opacity: 0.9;
+                filter: blur(0.3px);
+            }
+            100% {
+                transform: translateX(0px);
+                opacity: 0.85;
+                filter: blur(0.5px);
+            }
+        }
+
+        @keyframes fog-trail {
+            0% {
+                transform: translateX(-10px);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateX(5px);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateX(-10px);
+                opacity: 0.3;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1724,63 +1915,197 @@
     fetchLastFmData();
     setInterval(fetchLastFmData, 20000);
 
-    // Weather API integration
+    // Weather API integration with wttr.in (CORS-fixed)
+    // Weather API integration with wttr.in (NaN fix)
+    // Weather API integration with extensive debugging
     async function fetchWeatherData() {
         const weatherContainer = document.getElementById('weather-container');
-        const windSpeedElement = document.getElementById('wind-speed');
-        const humidityElement = document.getElementById('humidity');
 
         try {
-            // Using OpenWeatherMap API for Klagenfurt am Wörthersee
-            const apiKey = ''; // You'll need to add your own OpenWeatherMap API key
-            const city = 'Klagenfurt am Wörthersee';
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+            const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://wttr.in/Klagenfurt?format=j1'));
 
             if (!response.ok) {
                 throw new Error('Weather data not available');
             }
 
-            const data = await response.json();
+            const proxyData = await response.json();
+            const data = JSON.parse(proxyData.contents);
 
-            const temp = Math.round(data.main.temp);
-            const condition = data.weather[0].description;
-            const windSpeed = Math.round(data.wind.speed);
-            const humidity = data.main.humidity;
-
-            // Map weather condition to appropriate icon
-            let weatherIcon = 'fa-cloud';
-
-            if (condition.includes('clear')) {
-                weatherIcon = 'fa-sun';
-            } else if (condition.includes('rain')) {
-                weatherIcon = 'fa-cloud-rain';
-            } else if (condition.includes('snow')) {
-                weatherIcon = 'fa-snowflake';
-            } else if (condition.includes('thunderstorm')) {
-                weatherIcon = 'fa-bolt';
-            } else if (condition.includes('mist') || condition.includes('fog')) {
-                weatherIcon = 'fa-smog';
+            if (!data.current_condition || !data.current_condition[0]) {
+                throw new Error('No current weather data');
             }
 
-            weatherContainer.querySelector('.weather-icon').innerHTML = `<i class="fas ${weatherIcon}"></i>`;
-            weatherContainer.querySelector('.temp').textContent = `${temp}°C`;
-            weatherContainer.querySelector('.condition').textContent = condition;
-            windSpeedElement.textContent = `${windSpeed} m/s`;
-            humidityElement.textContent = `${humidity}%`;
+            const current = data.current_condition[0];
+            const hourlyData = data.weather[0].hourly;
+
+            // Finde die aktuellste Stunde
+            const now = new Date();
+            const currentTime = now.getHours() * 100; // 20:00 wird zu 2000, 13:00 zu 1300
+            const latestHourData = hourlyData
+                .filter(h => parseInt(h.time) <= currentTime)
+                .pop() || hourlyData[0]; // Nimm die letzte passende Stunde oder die erste
+
+            console.log('Using hourly data for time:', latestHourData.time, 'Current time:', currentTime);
+
+            // Verwende die aktuelleren stündlichen Daten mit Fallbacks
+            const temp = Math.round(parseFloat(latestHourData.tempC || current.temp_C) || 0);
+            const condition = (latestHourData.weatherDesc?.[0]?.value || current.weatherDesc[0]?.value || 'Unknown').toLowerCase();
+
+            let windSpeed = parseFloat(latestHourData.windspeedKmph || current.windspeedKmh || current.WindSpeedKmph) || 0;
+            windSpeed = Math.round(windSpeed);
+
+            let windDir = latestHourData.winddir16Point || current.winddir16Point || current.WindDir16Point || 'N';
+            const humidity = parseInt(latestHourData.humidity || current.humidity) || 0;
+
+            // TEST MODE
+            const testMode = new URLSearchParams(window.location.search).get('testweather');
+            if (testMode) {
+                console.log('🧪 WEATHER TEST MODE ACTIVE');
+                const testConditions = [
+                    { name: 'Sunny', icon: 'fa-sun', color: '#FFD700', class: 'sun-animation' },
+                    { name: 'Rainy', icon: 'fa-cloud-rain', color: '#4682B4', class: 'rain-animation' },
+                    { name: 'Snowy', icon: 'fa-snowflake', color: '#B0E0E6', class: 'snow-animation' },
+                    { name: 'Thunderstorm', icon: 'fa-bolt', color: '#FFD700', class: 'thunder-animation' },
+                    { name: 'Foggy', icon: 'fa-smog', color: '#D3D3D3', class: 'fog-animation' },
+                    { name: 'Cloudy', icon: 'fa-cloud', color: '#B0C4DE', class: 'cloud-animation' }
+                ];
+
+                const testWindDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+
+                let testIndex = 0;
+                const testInterval = setInterval(() => {
+                    if (testIndex >= testConditions.length) {
+                        clearInterval(testInterval);
+                        console.log('🧪 Test completed, returning to normal weather');
+                        return;
+                    }
+
+                    const testCondition = testConditions[testIndex];
+                    const testWindDir = testWindDirections[testIndex % testWindDirections.length];
+                    const testWindSpeed = Math.floor(Math.random() * 50) + 5;
+
+                    const windDirections = {
+                        'N': 0, 'NE': 45, 'E': 90, 'SE': 135,
+                        'S': 180, 'SW': 225, 'W': 270, 'NW': 315
+                    };
+                    const testWindRotation = windDirections[testWindDir] || 0;
+
+                    weatherContainer.innerHTML = `
+               <div class="weather-icon">
+                   <i class="fas ${testCondition.icon} ${testCondition.class}" style="color: ${testCondition.color};"></i>
+               </div>
+               <div class="weather-details">
+                   <div class="temp">${temp}°C</div>
+                   <div class="condition">🧪 Testing: ${testCondition.name}</div>
+                   <div class="weather-meta">
+                       <div class="weather-meta-item">
+                           <i class="fas fa-location-arrow wind-arrow" style="transform: rotate(${testWindRotation}deg); color: var(--accent-blue);"></i>
+                           <span>${testWindSpeed} km/h ${testWindDir}</span>
+                       </div>
+                       <div class="weather-meta-item">
+                           <i class="fas fa-tint" style="color: #4682B4;"></i>
+                           <span>${humidity}%</span>
+                       </div>
+                   </div>
+               </div>
+           `;
+
+                    console.log(`🧪 Testing: ${testCondition.name} - Wind: ${testWindSpeed} km/h ${testWindDir} (${testWindRotation}°)`);
+                    testIndex++;
+                }, 3000);
+                return;
+            }
+
+            // Normale Wetter-Icon-Logik
+            let weatherIcon = 'fa-cloud';
+            let iconColor = '#87CEEB';
+            let animationClass = '';
+
+            if (condition.includes('clear') || condition.includes('sunny')) {
+                weatherIcon = 'fa-sun';
+                iconColor = '#FFD700';
+                animationClass = 'sun-animation';
+            } else if (condition.includes('rain') || condition.includes('drizzle') || condition.includes('shower')) {
+                weatherIcon = 'fa-cloud-rain';
+                iconColor = '#4682B4';
+                animationClass = 'rain-animation';
+            } else if (condition.includes('snow')) {
+                weatherIcon = 'fa-snowflake';
+                iconColor = '#B0E0E6';
+                animationClass = 'snow-animation';
+            } else if (condition.includes('thunder') || condition.includes('storm')) {
+                weatherIcon = 'fa-bolt';
+                iconColor = '#FFD700';
+                animationClass = 'thunder-animation';
+            } else if (condition.includes('mist') || condition.includes('fog') || condition.includes('haze')) {
+                weatherIcon = 'fa-smog';
+                iconColor = '#D3D3D3';
+                animationClass = 'fog-animation';
+            } else if (condition.includes('cloud') || condition.includes('overcast')) {
+                weatherIcon = 'fa-cloud';
+                iconColor = '#B0C4DE';
+                animationClass = 'cloud-animation';
+            } else if (condition.includes('partly')) {
+                weatherIcon = 'fa-cloud-sun';
+                iconColor = '#FFD700';
+                animationClass = 'sun-animation';
+            }
+
+            // Wind direction arrow rotation
+            const windDirections = {
+                'N': 0, 'NNE': 22.5, 'NE': 45, 'ENE': 67.5,
+                'E': 90, 'ESE': 112.5, 'SE': 135, 'SSE': 157.5,
+                'S': 180, 'SSW': 202.5, 'SW': 225, 'WSW': 247.5,
+                'W': 270, 'WNW': 292.5, 'NW': 315, 'NNW': 337.5
+            };
+            const windRotation = windDirections[windDir] || 0;
+
+            console.log(`Weather data: ${temp}°C, ${condition}, Wind: ${windSpeed} km/h ${windDir} (${windRotation}°), Humidity: ${humidity}%`);
+
+            weatherContainer.innerHTML = `
+           <div class="weather-icon">
+               <i class="fas ${weatherIcon} ${animationClass}" style="color: ${iconColor};"></i>
+           </div>
+           <div class="weather-details">
+               <div class="temp">${temp}°C</div>
+               <div class="condition">${latestHourData.weatherDesc?.[0]?.value || current.weatherDesc[0]?.value || 'Unknown'}</div>
+               <div class="weather-meta">
+                   <div class="weather-meta-item">
+                       <i class="fas fa-location-arrow wind-arrow" style="transform: rotate(${windRotation}deg); color: var(--accent-blue);"></i>
+                       <span>${windSpeed} km/h ${windDir}</span>
+                   </div>
+                   <div class="weather-meta-item">
+                       <i class="fas fa-tint" style="color: #4682B4;"></i>
+                       <span>${humidity}%</span>
+                   </div>
+               </div>
+           </div>
+       `;
 
         } catch (error) {
             console.error('Error fetching weather data:', error);
-            weatherContainer.querySelector('.weather-icon').innerHTML = `<i class="fas fa-exclamation-circle"></i>`;
-            weatherContainer.querySelector('.temp').textContent = 'N/A';
-            weatherContainer.querySelector('.condition').textContent = 'Weather data unavailable';
-            windSpeedElement.textContent = '--';
-            humidityElement.textContent = '--';
+            weatherContainer.innerHTML = `
+           <div class="weather-icon">
+               <i class="fas fa-exclamation-circle" style="color: #FF6B6B;"></i>
+           </div>
+           <div class="weather-details">
+               <div class="temp">N/A</div>
+               <div class="condition">Weather data unavailable</div>
+               <div class="weather-meta">
+                   <div class="weather-meta-item">
+                       <i class="fas fa-wind"></i> <span>-- km/h</span>
+                   </div>
+                   <div class="weather-meta-item">
+                       <i class="fas fa-tint"></i> <span>--%</span>
+                   </div>
+               </div>
+           </div>
+       `;
         }
     }
 
-    // Fetch weather data (temporarily disabled since API key is needed)
-    // fetchWeatherData();
-    // setInterval(fetchWeatherData, 3600000); // Update once per hour
+    fetchWeatherData();
+    setInterval(fetchWeatherData, 1800000);
 
     // Calendar functionality
     function generateCalendar() {
