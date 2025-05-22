@@ -944,6 +944,44 @@
             color: rgba(176, 176, 204, 0.4);
         }
 
+
+        /* Add this CSS to make icons visible on hover */
+
+        /* Make icons more visible on hover with text shadow/outline */
+        .social-link:hover i {
+            text-shadow:
+                    -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000,
+                    0 0 3px rgba(0,0,0,0.8);
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        /* Specific adjustments for icons that need white color on hover */
+        .social-link.spotify:hover i,
+        .social-link.github:hover i,
+        .social-link.steam:hover i {
+            color: #ffffff !important;
+        }
+
+        /* Specific adjustments for icons that need black color on hover */
+        .social-link.tidal:hover i {
+            color: #ffffff !important;
+            text-shadow:
+                    -1px -1px 0 #00FFFF,
+                    1px -1px 0 #00FFFF,
+                    -1px 1px 0 #00FFFF,
+                    1px 1px 0 #00FFFF,
+                    0 0 5px #00FFFF;
+        }
+
+        /* YouTube - make icon white on red background */
+        .social-link.youtube:hover i {
+            color: #ffffff !important;
+        }
+
+
         .calendar-days {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
