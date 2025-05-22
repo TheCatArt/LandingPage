@@ -1607,7 +1607,7 @@
     // Update the fetchLastFmData function to include date and time
     async function fetchLastFmData() {
         try {
-            const response = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${lastfmUsername}&api_key=${lastfmApiKey}&format=json&limit=10`);
+            const response = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${lastfmUsername}&api_key=${lastfmApiKey}&format=json&limit=7`);
             const data = await response.json();
 
             if (!data.recenttracks || !data.recenttracks.track || data.recenttracks.track.length === 0) {
@@ -1719,9 +1719,9 @@
 
     }
 
-    // Fetch initial LastFM data and update every 30 seconds
+    // Fetch initial LastFM data and update every 20 seconds
     fetchLastFmData();
-    setInterval(fetchLastFmData, 30000);
+    setInterval(fetchLastFmData, 20000);
 
     // Weather API integration
     async function fetchWeatherData() {
