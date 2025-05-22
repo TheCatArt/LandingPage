@@ -1934,7 +1934,7 @@
 
 
             const now = new Date();
-            const currentTime = now.getHours() * 100; /
+            const currentTime = now.getHours() * 100;
             const latestHourData = hourlyData
                 .filter(h => parseInt(h.time) <= currentTime)
                 .pop() || hourlyData[0];
