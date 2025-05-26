@@ -1221,6 +1221,110 @@
             }
         }
 
+        @keyframes moon-animation {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+                filter: brightness(1) drop-shadow(0 0 10px #B0C4DE);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-2px) rotate(180deg);
+                filter: brightness(1.1) drop-shadow(0 0 15px #B0C4DE);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0px) rotate(360deg);
+                filter: brightness(1) drop-shadow(0 0 10px #B0C4DE);
+                opacity: 0.9;
+            }
+        }
+
+        /* Stars container */
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #ffffff;
+            animation: twinkle 3s infinite;
+        }
+
+        .star-1 { top: 20%; left: 20%; animation-delay: 0s; }
+        .star-2 { top: 30%; right: 25%; animation-delay: 0.5s; }
+        .star-3 { top: 60%; left: 15%; animation-delay: 1s; }
+        .star-4 { top: 70%; right: 20%; animation-delay: 1.5s; }
+        .star-5 { top: 45%; right: 40%; animation-delay: 2s; }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Partly cloudy day animation - cloud drift with sun glow */
+        @keyframes partly-cloudy-day-animation {
+            0% {
+                transform: translateX(-1px) translateY(0px);
+                filter: brightness(1) drop-shadow(2px 2px 8px #FFD700) drop-shadow(-2px -2px 6px #FFD700);
+            }
+            25% {
+                transform: translateX(0px) translateY(-0.5px);
+                filter: brightness(1.05) drop-shadow(3px 2px 10px #FFD700) drop-shadow(-3px -2px 8px #FFD700);
+            }
+            50% {
+                transform: translateX(1px) translateY(0px);
+                filter: brightness(1.1) drop-shadow(2px 2px 12px #FFD700) drop-shadow(-2px -2px 10px #FFD700);
+            }
+            75% {
+                transform: translateX(0px) translateY(0.5px);
+                filter: brightness(1.05) drop-shadow(1px 2px 10px #FFD700) drop-shadow(-1px -2px 8px #FFD700);
+            }
+            100% {
+                transform: translateX(-1px) translateY(0px);
+                filter: brightness(1) drop-shadow(2px 2px 8px #FFD700) drop-shadow(-2px -2px 6px #FFD700);
+            }
+        }
+
+        /* Partly cloudy night animation - gentle cloud movement with moon glow */
+        @keyframes partly-cloudy-night-animation {
+            0% {
+                transform: translateX(-0.5px) translateY(0px) rotate(0deg);
+                filter: brightness(1) drop-shadow(0 0 8px #B0C4DE) drop-shadow(2px 2px 12px #87CEEB);
+                opacity: 0.95;
+            }
+            33% {
+                transform: translateX(0px) translateY(-0.5px) rotate(1deg);
+                filter: brightness(1.05) drop-shadow(0 0 10px #B0C4DE) drop-shadow(2px 2px 15px #87CEEB);
+                opacity: 1;
+            }
+            66% {
+                transform: translateX(0.5px) translateY(0px) rotate(-1deg);
+                filter: brightness(1.1) drop-shadow(0 0 12px #B0C4DE) drop-shadow(2px 2px 18px #87CEEB);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-0.5px) translateY(0px) rotate(0deg);
+                filter: brightness(1) drop-shadow(0 0 8px #B0C4DE) drop-shadow(2px 2px 12px #87CEEB);
+                opacity: 0.95;
+            }
+        }
+
         .rain-animation {
             animation: rain-smooth 3s ease-in-out infinite alternate;
         }
@@ -1299,6 +1403,31 @@
                 opacity: 0.3;
             }
         }
+
+        /* Partly cloudy day animation - graue Wolke mit goldenem Sonnenschein */
+        @keyframes partly-cloudy-day-animation {
+            0% {
+                transform: translateX(-1px) translateY(0px);
+                filter: brightness(1) drop-shadow(2px 2px 8px #FFD700) drop-shadow(-2px -2px 6px #FFD700);
+            }
+            25% {
+                transform: translateX(0px) translateY(-0.5px);
+                filter: brightness(1.05) drop-shadow(3px 2px 10px #FFD700) drop-shadow(-3px -2px 8px #FFD700);
+            }
+            50% {
+                transform: translateX(1px) translateY(0px);
+                filter: brightness(1.1) drop-shadow(2px 2px 12px #FFD700) drop-shadow(-2px -2px 10px #FFD700);
+            }
+            75% {
+                transform: translateX(0px) translateY(0.5px);
+                filter: brightness(1.05) drop-shadow(1px 2px 10px #FFD700) drop-shadow(-1px -2px 8px #FFD700);
+            }
+            100% {
+                transform: translateX(-1px) translateY(0px);
+                filter: brightness(1) drop-shadow(2px 2px 8px #FFD700) drop-shadow(-2px -2px 6px #FFD700);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1963,6 +2092,260 @@
     setInterval(fetchLastFmData, 20000);
 
 
+
+    function getWeatherIconData(condition, temp, windSpeed, windDir, humidity) {
+        const now = new Date();
+        const currentHour = now.getHours();
+
+        // Determine if it's day or night (6 AM - 6 PM is day)
+        const isDaytime = currentHour >= 6 && currentHour < 18;
+
+        condition = condition.toLowerCase();
+
+        let weatherIcon = 'fa-cloud';
+        let iconColor = '#87CEEB';
+        let animationClass = '';
+        let extraElements = ''; // For stars, moon phases, etc.
+
+        // Clear/Sunny weather
+        if (condition.includes('clear') || condition.includes('sunny')) {
+            if (isDaytime) {
+                weatherIcon = 'fa-sun';
+                iconColor = '#FFD700';
+                animationClass = 'sun-animation';
+            } else {
+                weatherIcon = 'fa-moon';
+                iconColor = '#B0C4DE';
+                animationClass = 'moon-animation';
+                // Add stars for clear night
+                extraElements = `
+                <div class="stars-container">
+                    <div class="star star-1"></div>
+                    <div class="star star-2"></div>
+                    <div class="star star-3"></div>
+                    <div class="star star-4"></div>
+                    <div class="star star-5"></div>
+                </div>
+            `;
+            }
+        }
+
+// In der getWeatherIconData Funktion:
+        else if (condition.includes('partly') || condition.includes('scattered')) {
+            if (isDaytime) {
+                weatherIcon = 'fa-cloud-sun';
+                iconColor = '#B0C4DE'; // Grau
+                animationClass = 'partly-cloudy-day-animation';
+            } else {
+                weatherIcon = 'fa-cloud-moon';
+                iconColor = '#B0C4DE';
+                animationClass = 'partly-cloudy-night-animation';
+            }
+        }
+        // Rain
+        else if (condition.includes('rain') || condition.includes('drizzle') || condition.includes('shower')) {
+            weatherIcon = 'fa-cloud-rain';
+            iconColor = '#4682B4';
+            animationClass = 'rain-animation';
+        }
+        // Snow
+        else if (condition.includes('snow')) {
+            weatherIcon = 'fa-snowflake';
+            iconColor = '#B0E0E6';
+            animationClass = 'snow-animation';
+        }
+        // Thunderstorm
+        else if (condition.includes('thunder') || condition.includes('storm')) {
+            weatherIcon = 'fa-bolt';
+            iconColor = '#FFD700';
+            animationClass = 'thunder-animation';
+        }
+        // Fog/Mist
+        else if (condition.includes('mist') || condition.includes('fog') || condition.includes('haze')) {
+            weatherIcon = 'fa-smog';
+            iconColor = '#D3D3D3';
+            animationClass = 'fog-animation';
+        }
+        // Cloudy/Overcast
+        else if (condition.includes('cloud') || condition.includes('overcast')) {
+            weatherIcon = 'fa-cloud';
+            iconColor = '#B0C4DE';
+            animationClass = 'cloud-animation';
+        }
+
+        // Wind direction logic
+        const windDirections = {
+            'N': 0, 'NNE': 22.5, 'NE': 45, 'ENE': 67.5,
+            'E': 90, 'ESE': 112.5, 'SE': 135, 'SSE': 157.5,
+            'S': 180, 'SSW': 202.5, 'SW': 225, 'WSW': 247.5,
+            'W': 270, 'WNW': 292.5, 'NW': 315, 'NNW': 337.5
+        };
+        const windRotation = windDirections[windDir] || 0;
+
+        return {
+            icon: weatherIcon,
+            color: iconColor,
+            animation: animationClass,
+            extraElements: extraElements,
+            windRotation: windRotation,
+            isDaytime: isDaytime
+        };
+    }
+
+    // Debug function to test weather icons
+    function createWeatherDebugPanel() {
+        // Check if debug panel already exists
+        if (document.getElementById('weather-debug-panel')) {
+            return;
+        }
+
+        const debugPanel = document.createElement('div');
+        debugPanel.id = 'weather-debug-panel';
+        debugPanel.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(15, 15, 26, 0.95);
+        border: 2px solid var(--accent-purple);
+        border-radius: 12px;
+        padding: 20px;
+        min-width: 350px;
+        max-height: 80vh;
+        overflow-y: auto;
+        z-index: 10000;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        color: var(--text-primary);
+        font-family: 'Segoe UI', sans-serif;
+    `;
+
+        debugPanel.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0; color: var(--accent-purple);">🌤️ Weather Icon Debug</h3>
+            <button id="close-debug" style="background: var(--accent-purple); border: none; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer;">✕</button>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Weather Condition:</label>
+            <select id="debug-condition" style="width: 100%; padding: 8px; border-radius: 5px; background: rgba(40, 40, 60, 0.8); border: 1px solid var(--accent-purple); color: var(--text-primary);">
+                <option value="clear">Clear/Sunny</option>
+                <option value="partly cloudy">Partly Cloudy</option>
+                <option value="cloudy">Cloudy/Overcast</option>
+                <option value="rain">Rain</option>
+                <option value="drizzle">Drizzle</option>
+                <option value="snow">Snow</option>
+                <option value="thunderstorm">Thunderstorm</option>
+                <option value="fog">Fog/Mist</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Time of Day:</label>
+            <select id="debug-time" style="width: 100%; padding: 8px; border-radius: 5px; background: rgba(40, 40, 60, 0.8); border: 1px solid var(--accent-purple); color: var(--text-primary);">
+                <option value="auto">Auto (Current Time)</option>
+                <option value="day">Force Day (6:00-18:00)</option>
+                <option value="night">Force Night (18:00-6:00)</option>
+            </select>
+        </div>
+
+        <button id="test-weather" style="width: 100%; padding: 12px; background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; margin-bottom: 15px;">
+            🧪 Test Weather Icon
+        </button>
+
+        <div style="margin-bottom: 15px;">
+            <h4 style="margin: 0 0 10px 0; color: var(--text-secondary);">Preview:</h4>
+            <div id="debug-preview" style="background: rgba(30, 30, 50, 0.7); border-radius: 10px; padding: 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: var(--text-secondary);">Click "Test Weather Icon" to preview</span>
+            </div>
+        </div>
+
+        <div style="background: rgba(40, 40, 60, 0.5); border-radius: 8px; padding: 10px; font-size: 0.85em;">
+            <strong style="color: var(--accent-blue);">Debug Info:</strong>
+            <div id="debug-info" style="margin-top: 5px; color: var(--text-secondary);">
+                Waiting for test...
+            </div>
+        </div>
+    `;
+
+        document.body.appendChild(debugPanel);
+
+        // Event listeners
+        document.getElementById('close-debug').onclick = () => {
+            debugPanel.remove();
+        };
+
+        document.getElementById('test-weather').onclick = testWeatherIcon;
+
+        function testWeatherIcon() {
+            const condition = document.getElementById('debug-condition').value;
+            const timeMode = document.getElementById('debug-time').value;
+
+            // Simulate time based on selection
+            let originalGetHours;
+            if (timeMode !== 'auto') {
+                originalGetHours = Date.prototype.getHours;
+                Date.prototype.getHours = function() {
+                    return timeMode === 'day' ? 12 : 22; // Noon or 10 PM
+                };
+            }
+
+            // Get weather data
+            const weatherData = getWeatherIconData(condition, 20, 15, 'N', 65);
+
+            // Restore original getHours if modified
+            if (originalGetHours) {
+                Date.prototype.getHours = originalGetHours;
+            }
+
+            // Update preview
+            const preview = document.getElementById('debug-preview');
+            preview.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 20px; width: 100%;">
+                <div style="position: relative; display: flex; align-items: center; justify-content: center; min-width: 80px; min-height: 80px;">
+                    <i class="fas ${weatherData.icon} ${weatherData.animation}" style="color: ${weatherData.color}; font-size: 3rem;"></i>
+                    ${weatherData.extraElements}
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 5px; text-transform: capitalize;">${condition}</div>
+                    <div style="color: var(--text-secondary); margin-bottom: 3px;">Time: ${weatherData.isDaytime ? 'Day ☀️' : 'Night 🌙'}</div>
+                    <div style="color: var(--text-secondary);">Icon: ${weatherData.icon.replace('fa-', '')}</div>
+                </div>
+            </div>
+        `;
+
+            // Update debug info
+            const debugInfo = document.getElementById('debug-info');
+            debugInfo.innerHTML = `
+            <strong>Icon:</strong> ${weatherData.icon}<br>
+            <strong>Color:</strong> ${weatherData.color}<br>
+            <strong>Animation:</strong> ${weatherData.animation}<br>
+            <strong>Time:</strong> ${weatherData.isDaytime ? 'Daytime' : 'Nighttime'}<br>
+            <strong>Extra Elements:</strong> ${weatherData.extraElements ? 'Yes (Stars/Moon effects)' : 'None'}<br>
+            <strong>Current Hour:</strong> ${new Date().getHours()}:${String(new Date().getMinutes()).padStart(2, '0')}
+        `;
+        }
+    }
+
+    // Add debug activation function
+    function toggleWeatherDebug() {
+        const existing = document.getElementById('weather-debug-panel');
+        if (existing) {
+            existing.remove();
+        } else {
+            createWeatherDebugPanel();
+        }
+    }
+
+    // Add keyboard shortcut (Ctrl+Shift+W) to toggle debug panel
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.shiftKey && e.key === 'W') {
+            e.preventDefault();
+            toggleWeatherDebug();
+            console.log('🌤️ Weather Debug Panel toggled!');
+        }
+    });
+
+
     async function fetchWeatherData() {
         const weatherContainer = document.getElementById('weather-container');
 
@@ -2056,41 +2439,34 @@
                 let windDir = latestHourData.winddir16Point || current.winddir16Point || current.WindDir16Point || 'N';
                 const humidity = parseInt(latestHourData.humidity || current.humidity) || 0;
 
-                // Weather icon logic
-                let weatherIcon = 'fa-cloud';
-                let iconColor = '#87CEEB';
-                let animationClass = '';
+                const weatherData = getWeatherIconData(condition, temp, windSpeed, windDir, humidity);
 
-                if (condition.includes('clear') || condition.includes('sunny')) {
-                    weatherIcon = 'fa-sun';
-                    iconColor = '#FFD700';
-                    animationClass = 'sun-animation';
-                } else if (condition.includes('rain') || condition.includes('drizzle') || condition.includes('shower')) {
-                    weatherIcon = 'fa-cloud-rain';
-                    iconColor = '#4682B4';
-                    animationClass = 'rain-animation';
-                } else if (condition.includes('snow')) {
-                    weatherIcon = 'fa-snowflake';
-                    iconColor = '#B0E0E6';
-                    animationClass = 'snow-animation';
-                } else if (condition.includes('thunder') || condition.includes('storm')) {
-                    weatherIcon = 'fa-bolt';
-                    iconColor = '#FFD700';
-                    animationClass = 'thunder-animation';
-                } else if (condition.includes('mist') || condition.includes('fog') || condition.includes('haze')) {
-                    weatherIcon = 'fa-smog';
-                    iconColor = '#D3D3D3';
-                    animationClass = 'fog-animation';
-                } else if (condition.includes('cloud') || condition.includes('overcast')) {
-                    weatherIcon = 'fa-cloud';
-                    iconColor = '#B0C4DE';
-                    animationClass = 'cloud-animation';
-                } else if (condition.includes('partly')) {
-                    weatherIcon = 'fa-cloud-sun';
-                    iconColor = '#FFD700';
-                    animationClass = 'sun-animation';
-                }
+                console.log(`Weather data from ${location}: ${temp}°C, ${condition}, Wind: ${windSpeed} km/h ${windDir}, Time: ${weatherData.isDaytime ? 'Day' : 'Night'}`);
 
+                // Update the display with enhanced icons
+                weatherContainer.innerHTML = `
+                <div class="weather-icon">
+                    <i class="fas ${weatherData.icon} ${weatherData.animation}" style="color: ${weatherData.color};"></i>
+                    ${weatherData.extraElements}
+                </div>
+                <div class="weather-details">
+                    <div class="temp">${temp}°C</div>
+                    <div class="condition">${latestHourData.weatherDesc?.[0]?.value || current.weatherDesc?.[0]?.value || 'Unknown'}</div>
+                    <div class="weather-meta">
+                        <div class="weather-meta-item">
+                            <i class="fas fa-location-arrow wind-arrow" style="transform: rotate(${weatherData.windRotation}deg); color: var(--accent-blue);"></i>
+                            <span>${windSpeed} km/h ${windDir}</span>
+                        </div>
+                        <div class="weather-meta-item">
+                            <i class="fas fa-tint" style="color: #4682B4;"></i>
+                            <span>${humidity}%</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+// Log debug instructions
+                console.log(`🌤️ Weather Debug Panel Available! Press Ctrl+Shift+W to open/close`);
                 // Wind direction logic
                 const windDirections = {
                     'N': 0, 'NNE': 22.5, 'NE': 45, 'ENE': 67.5,
