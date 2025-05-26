@@ -2265,7 +2265,7 @@
 
   async function fetchServerStats() {
     try {
-      const response = await fetch('http://45.147.7.220:3621/stats', {
+      const response = await fetch('/stats', {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -2336,7 +2336,7 @@
 
     try {
 
-      const response = await fetch('http://45.147.7.220:3622/steam-status', {
+      const response = await fetch('/steam-status', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
