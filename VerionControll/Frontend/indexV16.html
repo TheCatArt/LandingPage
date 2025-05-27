@@ -1617,6 +1617,73 @@
                     <i class="fas fa-cloud" style="color: #0085FF;"></i>
                     <span>Bluesky</span>
                 </a>
+                <!-- Füge diese drei Buttons zu deiner bestehenden .social-links Sektion hinzu -->
+
+                <!-- Unity Button -->
+                <a href="https://unity.com/" target="_blank" class="social-link unity">
+                    <i class="fab fa-unity" style="color: #000000;"></i>
+                    <span>Unity</span>
+                </a>
+
+                <!-- VRChat Button -->
+                <a href="https://vrchat.com/home/user/usr_a56cfdb3-c82e-4701-b130-ed552d5c0d0c" target="_blank" class="social-link vrchat">
+                    <i class="fas fa-vr-cardboard" style="color: #1B2838;"></i>
+                    <span>VRChat</span>
+                </a>
+
+                <!-- BeatLeader Button -->
+                <a href="https://beatleader.com/u/the_cat_art" target="_blank" class="social-link beatleader">
+                    <i class="fas fa-music" style="color: #ff0066;"></i>
+                    <span>BeatLeader</span>
+                </a>
+
+                <style>
+                    /* CSS für die neuen Button Hover-Effekte */
+
+                    /* Unity Hover Effect */
+                    .social-link.unity:hover {
+                        background: linear-gradient(45deg, #000000, #FFFFFF);
+                        border-color: #000000;
+                    }
+
+                    /* VRChat Hover Effect */
+                    .social-link.vrchat:hover {
+                        background: linear-gradient(45deg, #1B2838, #00D4FF);
+                        border-color: #00D4FF;
+                    }
+
+                    /* BeatLeader Hover Effect */
+                    .social-link.beatleader:hover {
+                        background: linear-gradient(45deg, #ff0066, #ff6699);
+                        border-color: #ff0066;
+                    }
+
+                    /* Icon Text Shadow für bessere Lesbarkeit bei den neuen Buttons */
+                    .social-link.unity:hover i,
+                    .social-link.vrchat:hover i,
+                    .social-link.beatleader:hover i {
+                        text-shadow:
+                                -1px -1px 0 #000,
+                                1px -1px 0 #000,
+                                -1px 1px 0 #000,
+                                1px 1px 0 #000,
+                                0 0 3px rgba(0,0,0,0.8);
+                        filter: brightness(1.2) contrast(1.1);
+                    }
+
+                    /* Spezielle Farbanpassungen für besseren Kontrast */
+                    .social-link.unity:hover i {
+                        color: #ffffff !important;
+                    }
+
+                    .social-link.vrchat:hover i {
+                        color: #ffffff !important;
+                    }
+
+                    .social-link.beatleader:hover i {
+                        color: #ffffff !important;
+                    }
+                </style>
             </div>
         </div>
 
