@@ -1617,48 +1617,35 @@
                     <i class="fas fa-cloud" style="color: #0085FF;"></i>
                     <span>Bluesky</span>
                 </a>
-                <!-- Füge diese drei Buttons zu deiner bestehenden .social-links Sektion hinzu -->
-
-                <!-- Unity Button -->
                 <a href="https://unity.com/" target="_blank" class="social-link unity">
                     <i class="fab fa-unity" style="color: #000000;"></i>
                     <span>Unity</span>
                 </a>
-
-                <!-- VRChat Button -->
                 <a href="https://vrchat.com/home/user/usr_a56cfdb3-c82e-4701-b130-ed552d5c0d0c" target="_blank" class="social-link vrchat">
                     <i class="fas fa-vr-cardboard" style="color: #1B2838;"></i>
                     <span>VRChat</span>
                 </a>
-
-                <!-- BeatLeader Button -->
                 <a href="https://beatleader.com/u/the_cat_art" target="_blank" class="social-link beatleader">
                     <i class="fas fa-music" style="color: #ff0066;"></i>
                     <span>BeatLeader</span>
                 </a>
 
                 <style>
-                    /* CSS für die neuen Button Hover-Effekte */
-
-                    /* Unity Hover Effect */
                     .social-link.unity:hover {
                         background: linear-gradient(45deg, #000000, #FFFFFF);
                         border-color: #000000;
                     }
 
-                    /* VRChat Hover Effect */
                     .social-link.vrchat:hover {
                         background: linear-gradient(45deg, #1B2838, #00D4FF);
                         border-color: #00D4FF;
                     }
 
-                    /* BeatLeader Hover Effect */
                     .social-link.beatleader:hover {
                         background: linear-gradient(45deg, #ff0066, #ff6699);
                         border-color: #ff0066;
                     }
 
-                    /* Icon Text Shadow für bessere Lesbarkeit bei den neuen Buttons */
                     .social-link.unity:hover i,
                     .social-link.vrchat:hover i,
                     .social-link.beatleader:hover i {
@@ -1671,7 +1658,6 @@
                         filter: brightness(1.2) contrast(1.1);
                     }
 
-                    /* Spezielle Farbanpassungen für besseren Kontrast */
                     .social-link.unity:hover i {
                         color: #ffffff !important;
                     }
@@ -2033,22 +2019,22 @@
     async function fetchWeatherData() {
         const weatherContainer = document.getElementById('weather-container');
 
-        // Verschiedene Namen für Klagenfurt testen
+
         const locationNames = [
             'Klagenfurt,Austria',
             'Klagenfurt+am+Woerthersee',
             'Klagenfurt+am+Wörthersee',
             'Klagenfurt,AT',
             'Klagenfurt,Carinthia',
-            'Villach,Austria', // Fallback - nahe Stadt
-            'Graz,Austria'     // Fallback - andere österreichische Stadt
+            'Villach,Austria',
+            'Graz,Austria'
         ];
 
         for (const location of locationNames) {
             try {
                 console.log(`🌍 Trying location: ${location}`);
 
-                // Teste direkte API
+
                 let response = await fetch(`https://wttr.in/${location}?format=j1`, {
                     method: 'GET',
                     headers: {
@@ -2057,7 +2043,7 @@
                 });
 
                 if (!response.ok) {
-                    // Versuche Proxy
+
                     response = await fetch('https://corsproxy.io/?' + encodeURIComponent(`https://wttr.in/${location}?format=j1`));
                 }
 
@@ -2069,18 +2055,18 @@
                 const text = await response.text();
                 console.log(`📍 Response for ${location}:`, text.substring(0, 100));
 
-                // Prüfe ob es ein Fehler ist
+
                 if (text.includes('Unknown location') || text.includes('ERROR')) {
                     console.log(`❌ ${location} returned error`);
                     continue;
                 }
 
-                // Versuche JSON zu parsen
+
                 let data;
                 try {
                     data = JSON.parse(text);
                 } catch (parseError) {
-                    // Falls JSON korrupt ist, versuche es zu bereinigen
+
                     const cleanedText = text.trim();
                     const jsonStart = cleanedText.indexOf('{');
                     const jsonEnd = cleanedText.lastIndexOf('}') + 1;
@@ -2094,26 +2080,26 @@
                     }
                 }
 
-                // Validiere Datenstruktur
+
                 if (!data || !data.current_condition || !data.current_condition[0]) {
                     console.log(`❌ Invalid data structure for ${location}`);
                     continue;
                 }
 
-                // SUCCESS! 🎉
+
                 console.log(`✅ SUCCESS with location: ${location}`);
 
                 const current = data.current_condition[0];
                 const hourlyData = data.weather?.[0]?.hourly || [];
 
-                // Get current hour data
+
                 const now = new Date();
                 const currentTime = now.getHours() * 100;
                 const latestHourData = hourlyData
                     .filter(h => parseInt(h.time) <= currentTime)
                     .pop() || hourlyData[0] || current;
 
-                // Extract weather data with fallbacks
+
                 const temp = Math.round(parseFloat(latestHourData.tempC || current.temp_C) || 0);
                 const condition = (latestHourData.weatherDesc?.[0]?.value || current.weatherDesc?.[0]?.value || 'Unknown').toLowerCase();
 
@@ -2123,7 +2109,7 @@
                 let windDir = latestHourData.winddir16Point || current.winddir16Point || current.WindDir16Point || 'N';
                 const humidity = parseInt(latestHourData.humidity || current.humidity) || 0;
 
-                // Weather icon logic
+
                 let weatherIcon = 'fa-cloud';
                 let iconColor = '#87CEEB';
                 let animationClass = '';
@@ -2158,7 +2144,7 @@
                     animationClass = 'sun-animation';
                 }
 
-                // Wind direction logic
+
                 const windDirections = {
                     'N': 0, 'NNE': 22.5, 'NE': 45, 'ENE': 67.5,
                     'E': 90, 'ESE': 112.5, 'SE': 135, 'SSE': 157.5,
@@ -2169,12 +2155,12 @@
 
                 console.log(`Weather data from ${location}: ${temp}°C, ${condition}, Wind: ${windSpeed} km/h ${windDir}`);
 
-                // Update location display if not Klagenfurt
+
                 const locationDisplay = location.includes('Villach') ? 'Villach (near Klagenfurt)' :
                     location.includes('Graz') ? 'Graz, Austria' :
                         'Klagenfurt am Wörthersee';
 
-                // Update the display
+
                 weatherContainer.innerHTML = `
                 <div class="weather-icon">
                     <i class="fas ${weatherIcon} ${animationClass}" style="color: ${iconColor};"></i>
@@ -2195,7 +2181,7 @@
                 </div>
             `;
 
-                // Update location name if different
+
                 if (!location.toLowerCase().includes('klagenfurt')) {
                     const locationNameEl = document.querySelector('.location-name span');
                     if (locationNameEl) {
@@ -2203,7 +2189,7 @@
                     }
                 }
 
-                return; // Success! Exit function
+                return;
 
             } catch (error) {
                 console.log(`❌ Error with ${location}:`, error.message);
@@ -2211,7 +2197,7 @@
             }
         }
 
-        // If all locations failed
+
         console.error('🚨 All weather locations failed!');
         weatherContainer.innerHTML = `
         <div class="weather-icon">
