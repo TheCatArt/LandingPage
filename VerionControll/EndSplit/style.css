@@ -1306,9 +1306,15 @@ nav a:hover::after {
     border-color: #ff0066;
 }
 
+.social-link.stackoverflow:hover {
+    background: linear-gradient(45deg, #f48024, #ff9500);
+    border-color: #f48024;
+}
+
 .social-link.unity:hover i,
-.social-link.vrchat:hover i,
-.social-link.beatleader:hover i {
+.social-link.vrchat:hover .vrchat-logo,
+.social-link.beatleader:hover .beatleader-logo,
+.social-link.stackoverflow:hover i {
     text-shadow:
             -1px -1px 0 #000,
             1px -1px 0 #000,
@@ -1327,5 +1333,9 @@ nav a:hover::after {
 }
 
 .social-link.beatleader:hover i {
+    color: #ffffff !important;
+}
+
+.social-link.stackoverflow:hover i {
     color: #ffffff !important;
 }
