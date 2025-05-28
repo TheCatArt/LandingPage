@@ -1,4 +1,4 @@
-# Cat's Dashboard 🐱
+# Cat's Dashboard 
 
 A modern, responsive personal dashboard featuring real-time integrations with various services and platforms.
 
