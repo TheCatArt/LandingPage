@@ -6,8 +6,8 @@ const app = express();
 const port = 3622;
 
 
-const STEAM_API_KEY = 'DEIN_STEAM_API_KEY_HIER';
-const STEAM_ID = '76561199187129606';
+const STEAM_API_KEY = 'STEAM_API_KEY';
+const STEAM_ID = 'STEAM_ID';
 
 app.use(cors({
     origin: '*',
