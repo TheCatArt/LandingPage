@@ -1312,6 +1312,33 @@ file_get_contents("WEBHOOK_LINK", false, stream_context_create([
                 opacity: 0.3;
             }
         }
+        .secret-link {
+            cursor: default; /* Normaler Cursor, nicht pointer */
+            transition: all 0.3s ease;
+            position: relative;
+            color: inherit; /* Gleiche Farbe wie normaler Text */
+        }
+
+        .secret-link:hover {
+            color: var(--accent-blue); /* Deine blaue Akzentfarbe */
+            text-shadow: 0 0 10px rgba(42, 106, 243, 0.3);
+            cursor: pointer; /* Zeigt Pointer nur beim Hover */
+        }
+
+        .secret-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .secret-link:hover::after {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -1642,6 +1669,10 @@ file_get_contents("WEBHOOK_LINK", false, stream_context_create([
                     <i class="fas fa-music" style="color: #ff0066;"></i>
                     <span>BeatLeader</span>
                 </a>
+                <a href="https://stackoverflow.com/users/27346375/the-cat-art" target="_blank" class="social-link stackoverflow">
+                    <i class="fab fa-stack-overflow" style="color: #f48024;"></i>
+                    <span>StOv</span>
+                </a>
 
                 <style>
                     .social-link.unity:hover {
@@ -1659,9 +1690,15 @@ file_get_contents("WEBHOOK_LINK", false, stream_context_create([
                         border-color: #ff0066;
                     }
 
+                    .social-link.stackoverflow:hover {
+                        background: linear-gradient(45deg, #f48024, #ff9500);
+                        border-color: #f48024;
+                    }
+
                     .social-link.unity:hover i,
-                    .social-link.vrchat:hover i,
-                    .social-link.beatleader:hover i {
+                    .social-link.vrchat:hover .vrchat-logo,
+                    .social-link.beatleader:hover .beatleader-logo,
+                    .social-link.stackoverflow:hover i {
                         text-shadow:
                                 -1px -1px 0 #000,
                                 1px -1px 0 #000,
@@ -1680,6 +1717,10 @@ file_get_contents("WEBHOOK_LINK", false, stream_context_create([
                     }
 
                     .social-link.beatleader:hover i {
+                        color: #ffffff !important;
+                    }
+
+                    .social-link.stackoverflow:hover i {
                         color: #ffffff !important;
                     }
                 </style>
@@ -1721,7 +1762,7 @@ file_get_contents("WEBHOOK_LINK", false, stream_context_create([
 
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                     <p style="flex: 1; margin: 0; line-height: 1.6;">
-                        I love spending time with my boyfriend, diving into new tech just for fun,
+                        I love spending time with my <span id="secret-trigger" class="secret-link">boyfriend</span>, diving into new tech just for fun,
                         and soaking up the peaceful vibes around Klagenfurt. Whether it's a cozy night
                         in with music or a spontaneous adventure outdoors, I’m all about keeping things curious and meaningful.
                     </p>
@@ -1799,11 +1840,11 @@ file_get_contents("WEBHOOK_LINK", false, stream_context_create([
                     </h3>
                     <div style="background: rgba(40, 40, 60, 0.5); border-radius: 12px; padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.05);">
                         <iframe
-                            src="https://widgets.vendicated.dev/user?id=766654704419078164&theme=dark&banner=true&full-banner=true&rounded-corners=true&discord-icon=true&badges=true&guess-nitro=true&"
-                            width="100%"
-                            height="280"
-                            style="border: none; border-radius: 8px; background: transparent;"
-                            loading="lazy">
+                                src="https://widgets.vendicated.dev/user?id=766654704419078164&theme=dark&banner=true&full-banner=true&rounded-corners=true&discord-icon=true&badges=true&guess-nitro=true&"
+                                width="100%"
+                                height="280"
+                                style="border: none; border-radius: 8px; background: transparent;"
+                                loading="lazy">
                         </iframe>
 
 
@@ -2509,10 +2550,20 @@ file_get_contents("WEBHOOK_LINK", false, stream_context_create([
     fetchSteamStatus();
     setInterval(fetchSteamStatus, 30000);
 
+    document.getElementById('secret-trigger').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 100);
+
+        setTimeout(() => {
+            window.location.href = '/easter-egg.html';
+        }, 200);
+    });
+
 </script>
 </body>
 </html>
-
 
 
 
