@@ -675,3 +675,15 @@ async function fetchSteamStatus() {
 
 fetchSteamStatus();
 setInterval(fetchSteamStatus, 30000);
+
+
+document.getElementById('secret-trigger').addEventListener('click', function() {
+    this.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        this.style.transform = 'scale(1)';
+    }, 100);
+
+    setTimeout(() => {
+        window.location.href = '/easter-egg.html';
+    }, 200);
+});
