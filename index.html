@@ -1299,6 +1299,33 @@
                 opacity: 0.3;
             }
         }
+        .secret-link {
+            cursor: default; /* Normaler Cursor, nicht pointer */
+            transition: all 0.3s ease;
+            position: relative;
+            color: inherit; /* Gleiche Farbe wie normaler Text */
+        }
+
+        .secret-link:hover {
+            color: var(--accent-blue); /* Deine blaue Akzentfarbe */
+            text-shadow: 0 0 10px rgba(42, 106, 243, 0.3);
+            cursor: pointer; /* Zeigt Pointer nur beim Hover */
+        }
+
+        .secret-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .secret-link:hover::after {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -1722,7 +1749,7 @@
 
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                     <p style="flex: 1; margin: 0; line-height: 1.6;">
-                        I love spending time with my boyfriend, diving into new tech just for fun,
+                        I love spending time with my <span id="secret-trigger" class="secret-link">boyfriend</span>, diving into new tech just for fun,
                         and soaking up the peaceful vibes around Klagenfurt. Whether it's a cozy night
                         in with music or a spontaneous adventure outdoors, I’m all about keeping things curious and meaningful.
                     </p>
@@ -2509,6 +2536,17 @@
 
     fetchSteamStatus();
     setInterval(fetchSteamStatus, 30000);
+
+    document.getElementById('secret-trigger').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 100);
+
+        setTimeout(() => {
+            window.location.href = '/easter-egg.html';
+        }, 200);
+    });
 
 </script>
 </body>
