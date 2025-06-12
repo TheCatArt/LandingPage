@@ -1339,3 +1339,31 @@ nav a:hover::after {
 .social-link.stackoverflow:hover i {
     color: #ffffff !important;
 }
+
+.secret-link {
+    cursor: default;
+    transition: all 0.3s ease;
+    position: relative;
+    color: inherit;
+}
+
+.secret-link:hover {
+    color: var(--accent-blue);
+    text-shadow: 0 0 10px rgba(42, 106, 243, 0.3);
+    cursor: pointer;
+}
+
+.secret-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent-blue);
+    transition: width 0.3s ease;
+}
+
+.secret-link:hover::after {
+    width: 100%;
+}
